@@ -7,9 +7,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'ayu-theme/ayu-vim'
-Plug 'preservim/nerdtree'
-Plug 'Yggdroot/indentLine'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'lervag/vimtex'
+Plug 'sirver/ultisnips'
+Plug 'mhinz/vim-startify'
 call plug#end()  
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -20,32 +21,62 @@ if (empty($TMUX))
     if (has("nvim"))
         let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     endif
+    if (has("termguicolors"))
+        set termguicolors
+    endif
 else
     set t_ut=
-endif
-
-if (has("termguicolors"))
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
+    if (has("termguicolors"))
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+        set termguicolors
+    endif
 endif
 
 set t_Co=256
-set termguicolors
 syntax on
 let ayucolor="mirage"
 colorscheme ayu
 
-let g:indentLine_setColors = 0
-let g:indentLine_char = '┊'
+set background=dark
+
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+
+let g:ycm_enable_diagnostic_signs = 0
+
+set noshowmode  " to get rid of thing like --INSERT--
+set noshowcmd  " to get rid of display of last command
+set shortmess+=F  " to get rid of the file name displayed in the command line bar
+
+
+let g:ascii = [
+        \ '           __                 ',
+        \ '   __  __ /\_\    ___ ___     ',
+        \ '  /\ \/\ \\/\ \ /'' __` _ `\  ',
+        \ '  \ \ \_/ |\ \ \/\ \/\ \/\ \  ',
+        \ '   \ \___/  \ \_\ \_\ \_\ \_\ ',
+        \ '    \/__/    \/_/\/_/\/_/\/_/ ',
+        \ '                              ',
+        \ ]
+let g:startify_custom_header =
+      \ 'startify#center(g:ascii)'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" for command mode
+nnoremap <S-Tab> <<
+" for insert mode
+inoremap <S-Tab> <C-d>
+
 noremap <silent> k gk
 noremap <silent> j gj
+ 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
 set nu rnu
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -303,23 +334,6 @@ map <leader>x :e ~/buffer.md<cr>
 map <leader>pp :setlocal paste!<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NERDTree stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" start nerd tree if no buffers open
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-map <C-n> :NERDTreeToggle<CR>
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Display arrows instead of ascii art in NERDTree
-let NERDTreeDirArrows=1
-
-" Start NERDTree in minimal UI mode (No help lines)
-let NERDTreeMinimalUI=1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Buffer stuff
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Move to the previous buffer with "gp"
@@ -333,3 +347,20 @@ nnoremap gl :ls<CR>
 
 " List all possible buffers with "gb" and accept a new buffer argument [1]
 nnoremap gb :ls<CR>:b
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Latex Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:tex_flavor='latex'
+" let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Snippets Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
