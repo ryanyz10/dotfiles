@@ -70,8 +70,19 @@ yabai -m rule --add label="FaceTime" app="^FaceTime$" manage=off
 yabai -m rule --add label="Spark" app="^Spark$" manage=off
 yabai -m rule --add label="Vimari" app="^Vimari$" manage=off
 yabai -m rule --add label="DaisyDisk" app="^DaisyDisk$" manage=off
+yabai -m rule --add label="Discord" app="^Discord$" manage=off
+yabai -m rule --add label="Skim" app="^Skim$" title="^(General|Display|Notes|Sync)$" manage=off
+yabai -m rule --add label="Messenger" app="^Messenger$" manage=off
+yabai -m rule --add label="Cold Turkey" app="^Cold Turkey Blocker$" manage=off
 
 yabai -m signal --add event=space_changed \
-    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"nibar-spaces-primary-jsx\"'"
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"ayu-nibar-spaces-primary-jsx\"'"
+yabai -m signal --add event=display_changed \
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"ayu-nibar-spaces-primary-jsx\"'"
+
+yabai -m signal --add event=space_changed \
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"ayu-nibar-spaces-secondary-jsx\"'"
+yabai -m signal --add event=display_changed \
+    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"ayu-nibar-spaces-secondary-jsx\"'"
 
 echo "yabai configuration loaded.."
