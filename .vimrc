@@ -41,6 +41,7 @@ colorscheme ayu
 set background=dark
 
 highlight Normal ctermbg=none
+highlight Conceal ctermbg=none ctermfg=243
 highlight NonText ctermbg=none
 
 let g:ycm_enable_diagnostic_signs = 0
@@ -352,6 +353,7 @@ nnoremap gb :ls<CR>:b
 " => Latex Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tex_flavor='latex'
+let g:vimtex_view_method = 'skim'
 " let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
